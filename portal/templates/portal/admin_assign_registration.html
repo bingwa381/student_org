@@ -1,0 +1,42 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Assign Registration Number{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="card-title mb-0">Assign Registration Number</h3>
+                    <a href="{% url 'admin_students' %}" class="btn btn-secondary btn-sm">Back to Student List</a>
+                </div>
+                <div class="card-body">
+                    <p><strong>Student:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+                    <p><strong>Email:</strong> {{ student.user.email }}</p>
+                    <p><strong>Status:</strong> {% if student.is_approved %}Approved{% else %}Pending{% endif %}</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="mb-3">
+                            {{ form.registration_number.label_tag }}
+                            {{ form.registration_number }}
+                            {% if form.registration_number.errors %}
+                                <div class="text-danger">{{ form.registration_number.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Assign & Approve</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

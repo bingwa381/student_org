@@ -1,0 +1,59 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body_class %}dashboard-background{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    {% if student.profile_picture %}
+                        <img src="{{ student.profile_picture.url }}" alt="Profile Picture" class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                    {% else %}
+                        <i class="fas fa-user-circle fa-4x text-primary mb-3"></i>
+                    {% endif %}
+                    <h5 class="card-title">{{ student.user.first_name }} {{ student.user.last_name }}</h5>
+                    <p class="card-text">{{ student.registration_number }}</p>
+                    <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Profile Information</h5>
+                </div>
+                <div class="card-body text-dark">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Email:</strong> {{ student.user.email }}</p>
+                            <p><strong>Registration Number:</strong> {{ student.registration_number }}</p>
+                            <p><strong>Gender:</strong> {{ student.gender }}</p>
+                            <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Phone:</strong> {{ student.phone }}</p>
+                            <p><strong>Course:</strong> {{ student.course }}</p>
+                            <p><strong>Year of Study:</strong> {{ student.year_of_study }}</p>
+                            <p><strong>Status:</strong>
+                                {% if student.is_approved %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending Approval</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if not student.is_approved %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> Your account is pending admin approval. You will be notified once approved.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

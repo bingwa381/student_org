@@ -1,0 +1,158 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}Student Registration{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Student Registration</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        Please complete your details. An admin will assign your registration number and approve your account.
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.first_name.label_tag }}
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger">{{ form.first_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.last_name.label_tag }}
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger">{{ form.last_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.username.label_tag }}
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.password1.label_tag }}
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <div class="text-danger">{{ form.password1.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.password2.label_tag }}
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="text-danger">{{ form.password2.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.gender.label_tag }}
+                                {{ form.gender }}
+                                {% if form.gender.errors %}
+                                    <div class="text-danger">{{ form.gender.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.date_of_birth.label_tag }}
+                                {{ form.date_of_birth }}
+                                {% if form.date_of_birth.errors %}
+                                    <div class="text-danger">{{ form.date_of_birth.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.phone.label_tag }}
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <div class="text-danger">{{ form.phone.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form.course.label_tag }}
+                                {{ form.course }}
+                                {% if form.course.errors %}
+                                    <div class="text-danger">{{ form.course.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.year_of_study.label_tag }}
+                                {{ form.year_of_study }}
+                                {% if form.year_of_study.errors %}
+                                    <div class="text-danger">{{ form.year_of_study.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="mb-4 p-3 rounded" style="background:#f8f9fa; border:1px solid #dee2e6;">
+                            <h5 class="mb-2">Payment details</h5>
+                            <p class="mb-2">
+                                Please pay <strong>10,000 TSH</strong> to the following account before submitting your registration:
+                            </p>
+                            <p class="mb-1"><strong>Bank:</strong> CRDB</p>
+                            <p class="mb-1"><strong>Account number:</strong> 0152922119300</p>
+                            <p class="mb-1"><strong>Account name:</strong> Bein</p>
+                            <p class="small text-muted">After you make the payment, confirm it below and then submit the form.</p>
+                        </div>
+                        <div class="mb-3">
+                            {{ form.payment_amount.label_tag }}
+                            {{ form.payment_amount }}
+                            {% if form.payment_amount.errors %}
+                                <div class="text-danger">{{ form.payment_amount.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.payment_reference.label_tag }}
+                            {{ form.payment_reference }}
+                            {% if form.payment_reference.errors %}
+                                <div class="text-danger">{{ form.payment_reference.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-check mb-3">
+                            {{ form.payment_confirmed }}
+                            {{ form.payment_confirmed.label_tag }}
+                            {% if form.payment_confirmed.errors %}
+                                <div class="text-danger">{{ form.payment_confirmed.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.profile_picture.label_tag }}
+                            {{ form.profile_picture }}
+                            {% if form.profile_picture.errors %}
+                                <div class="text-danger">{{ form.profile_picture.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
