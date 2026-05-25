@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: student_org_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  web:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8000 my_org_site.wsgi:application
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    environment:
+      DJANGO_SETTINGS_MODULE: my_org_site.settings
+      DEBUG: 'True'
+      DATABASE_URL: postgres://postgres:postgres@db:5432/student_org_db
+      SECRET_KEY: replace-this-secret
+      ALLOWED_HOSTS: 'localhost,127.0.0.1'
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    command: npm run dev -- --hostname 0.0.0.0
+    volumes:
+      - ./frontend:/app
+    ports:
+      - '3000:3000'
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
